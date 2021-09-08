@@ -24,11 +24,7 @@ pipeline {
             }
         }
         //deploy to Nexus Repo
-        stage('Deliver') {
-            steps {
-                sh './jenkins/scripts/deliver.sh'
-            }
-        }
+       
         //deploy to TomCat Web Server
         stage('Deliver') {
             steps {
