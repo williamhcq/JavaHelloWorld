@@ -8,12 +8,15 @@ pipeline {
     stages {
         //use Maven Build
         stage('Clean') {
+            echo 'Clean Start'
             steps {
                 sh 'mvn -B -DskipTests clean package'
             }
+            echo 'Clean End'
         }
         //use SonarQube
         stage('Test') {
+            echo 'Test Start'
             steps {
                 sh 'mvn test'
             }
@@ -22,6 +25,7 @@ pipeline {
                     junit 'target/surefire-reports/*.xml'
                 }
             }
+            echo 'Test End'
         }
         //deploy to Nexus Repo
        
