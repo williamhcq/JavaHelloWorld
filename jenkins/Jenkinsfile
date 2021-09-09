@@ -6,12 +6,7 @@ pipeline {
         }
     }
     stages {
-        //use Maven Build
-        stage('Build') {
-            steps {
-                sh 'mvn -B -DskipTests clean package'
-            }
-        }
+        
         //use SonarQube
         stage('Test') {
             steps {
@@ -23,7 +18,19 @@ pipeline {
                 }
             }
         }
-       
+        stage('SCM') {
+
+            checkout scm
+        }
+        stage('SonarQube Analysis') {
+
+            def mvn = tool 'Default Maven';
+            withSonarQubeEnv() {
+
+            sh "${mvn}/bin/mvn sonar:sonar"
+            
+            }
+        }
         //deploy to TomCat Web Server
         stage('Deliver') {
             steps {
